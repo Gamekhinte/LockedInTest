@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LockedIn Tag 1</title>
+</head>
+<body>
+<h1>LockedIn · Tag 1</h1>
+<h2>Heute</h2>
+<p id="date"></p>
+<p>Woche: Mo [ ] Di [ ] Mi [ ] Do [ ] Fr [ ] Sa [ ] So [ ]</p>
+<table border="1" cellpadding="6">
+  <tr><th>Aufgabe</th><th>Ziel</th><th>Stand</th><th>Erledigt</th></tr>
+  <tr><td>Liegestütze</td><td>3 Sets</td><td id="s0">0/3</td><td><input type="checkbox" data-i="0" data-t="3 Sets Liegestütze"></td></tr>
+  <tr><td>Squats</td><td>3 Sets</td><td id="s1">0/3</td><td><input type="checkbox" data-i="1" data-t="3 Sets Squats"></td></tr>
+  <tr><td>Plank</td><td>3 Sets</td><td id="s2">0/3</td><td><input type="checkbox" data-i="2" data-t="3 Sets Plank"></td></tr>
+  <tr><td>Lauf</td><td>2,0 km</td><td id="s3">0,00</td><td><input type="checkbox" data-i="3" data-t="2,0 km Lauf"></td></tr>
+  <tr><td>Kalorien</td><td>2.560</td><td>345</td><td></td></tr>
+</table>
+<p id="open"></p>
+<button>Lauf starten</button>
+<script>
+document.getElementById('date').textContent=new Date().toLocaleDateString('de-DE',{weekday:'long',day:'numeric',month:'long'});
+const boxes=[...document.querySelectorAll('input[type=checkbox]')],goal=['3/3','3/3','3/3','2,00'];
+function upd(){
+  boxes.forEach((b,i)=>document.getElementById('s'+i).textContent=b.checked?goal[i]:(i<3?'0/3':'0,00'));
+  const open=boxes.filter(b=>!b.checked).map(b=>b.dataset.t);
+  document.getElementById('open').textContent=open.length?'Noch offen: '+open.join(', '):'Alles erledigt.';
+}
+boxes.forEach(b=>b.onchange=upd);upd();
+</script>
+</body>
+</html>
